@@ -43,23 +43,22 @@ export class ShopPage {
 
   RateStar(star) {
     switch (star) {
-      case '1':
+      case 1:
         this.rateStar = 1;
         break;
-      case '2':
+      case 2:
         this.rateStar = 2;
         break;
-      case '3':
+      case 3:
         this.rateStar = 3;
         break;
-      case '4':
-        this.rateStar = 2;
+      case 4:
+        this.rateStar = 4;
         break;
-      case '5':
-        this.rateStar = 2;
+      case 5:
+        this.rateStar = 5;
         break;
       default: this.rateStar = 0;
-
     }
   }
 
