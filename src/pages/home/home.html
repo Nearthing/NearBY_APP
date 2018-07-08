@@ -1,19 +1,28 @@
-<ion-header>
+<ion-header no-border>
   <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <ion-title align="center">Nearby</ion-title>
   </ion-navbar>
+  <ion-searchbar [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)" placeholder="Bạn muốn tìm gì?">
+  </ion-searchbar>
 </ion-header>
 
-<ion-content padding>
- 
-
-  <ion-list *ngIf='arr_destinationAddress'>
-    <ion-item *ngFor = 'let arr of arr_destinationAddress' (click)="push_diretion(arr.langt)">
-        <h2>{{arr.address}}</h2>
-        <p>Cách {{arr.distance.text}} khoảng: {{arr.duration.text}}</p>
+<ion-content>
+  <ion-list  *ngIf='arr_destinationAddress' >
+    <ion-item *ngFor = 'let point of arr_destinationAddress' (click)="push_shop(point)">
+      <ion-thumbnail item-start>
+        <img  [src]="point.point.nameshop ? 'assets/imgs/'+point.point.icon : ''">
+      </ion-thumbnail>
+      <h2>{{point.point.nameshop}}</h2>
+      <p>{{point.point.address}}</p>
+      <!-- <button ion-button clear item-end>View</button> -->
+      <p>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star-half"></ion-icon>
+        <ion-icon name="star-outline"></ion-icon> 
+      </p>
+      <ion-note item-end>{{point.distance.text}} </ion-note>
     </ion-item>
   </ion-list>
-
 </ion-content>

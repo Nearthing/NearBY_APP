@@ -1,0 +1,68 @@
+<ion-header no-border>
+  <ion-navbar>
+    <ion-title>{{point.point.nameshop}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+
+    <img src="assets/imgs/banh.png">
+    <ion-fab right top>
+      <button ion-fab (click)="mapPage()">
+        <ion-icon name="pin"></ion-icon>
+      </button>
+    </ion-fab>
+
+    <ion-item>
+      <h1>{{point.point.nameshop}}</h1>
+    </ion-item>
+
+    <ion-item>
+      <span item-start>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star-half"></ion-icon>
+        <ion-icon name="star-outline"></ion-icon>
+      </span>
+      <span item-start>( sao)</span>
+      <button ion-button icon-start clear item-end>
+        Đánh giá
+      </button>
+    </ion-item>
+  </ion-card>
+
+  <ion-item-group>
+    <ion-item-divider color="light">Thông tin địa điểm</ion-item-divider>
+    <ion-item>
+      <ion-icon name="ios-compass-outline"></ion-icon>&nbsp;&nbsp;{{point.point.address}}
+    </ion-item>
+    <ion-item>
+      <ion-icon name="ios-map-outline"></ion-icon>&nbsp;&nbsp;Khoản cách: {{point.distance.text}} </ion-item>
+    <ion-item>
+      <ion-icon name="ios-phone-portrait-outline"></ion-icon>&nbsp;&nbsp;&nbsp;+84 {{point.point.phone}}
+    </ion-item>
+  </ion-item-group>
+
+
+  <ion-item-group>
+    <ion-item-divider color="light">Bình luận</ion-item-divider>
+    <ion-item *ngFor="let cmt of comments">
+      <h5>
+        <b>{{cmt.Name}}</b>
+      </h5>
+      <p>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star-half"></ion-icon>
+        <ion-icon name="star-outline"></ion-icon>
+        {{cmt.CommentDate}}
+      </p>
+      <p>{{cmt.Content}}</p>
+    </ion-item>
+  </ion-item-group>
+
+
+</ion-content>

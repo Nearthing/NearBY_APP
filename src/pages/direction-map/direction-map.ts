@@ -1,13 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { GoogleMap, GoogleMapOptions, GoogleMaps, Marker } from '@ionic-native/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
 
-/**
- * Generated class for the DirectionMapPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 declare var google
 var directionsService = new google.maps.DirectionsService;
 var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -21,7 +15,7 @@ export class DirectionMapPage {
   
   public map: any;
   constructor(public navCtrl: NavController, 
-    public platforms: Platform,
+    public platforms: Platform,public _geolocation: Geolocation,
     public navParams: NavParams) {
   }
 
@@ -29,27 +23,30 @@ export class DirectionMapPage {
       await this.platforms.ready();
       this.initMap();
   }
-  initMap() {
-    var langt =  this.navParams.get('langt');
-    var lat_user:number =  this.navParams.get('lat_user');
-    var lng_uer:number =  this.navParams.get('lng_uer');
-    console.log(lat_user)
-    console.log(langt);
-
-    this.map = new google.maps.Map(document.getElementById('map_canvas'), {
-      zoom: 20,
-      center: {lat: lat_user, lng: lng_uer}
-    });
-    
-     directionsDisplay.setMap(this.map);
-     this.calculateAndDisplayRoute(langt,lat_user,lng_uer) 
+   initMap() {
+   this._geolocation.getCurrentPosition().then((GPS_lang)=>{
+        let lat_user = GPS_lang.coords.latitude;// vĩ độ
+        let lng_uer = GPS_lang.coords.longitude;// khinh độ
+      
+      
+        var lat_shop :number =  parseFloat(this.navParams.get('lat_shop'));
+        var lng_shop:number =  parseFloat(this.navParams.get('lng_shop'));
+        
+        this.map = new google.maps.Map(document.getElementById('map_canvas'), {
+          zoom: 15,
+          center: {lat: lat_user, lng: lng_uer}
+        });
+        
+        directionsDisplay.setMap(this.map);
+        this.calculateAndDisplayRoute({lat:lat_shop,lng:lng_shop},{lat:lat_user,lng:lng_uer}) 
+    },(err)=>{alert('loi'+err)});//_geolocation
   }
-  calculateAndDisplayRoute(langt,lat_user,lng_uer) {
+  calculateAndDisplayRoute(langt_shop,langt_user) {
+    console.log(langt_shop,langt_user)
     directionsService.route({
-      // origin: {lat: $lat, lng: $lng},
-      // destination: lang_end,
-      origin: {lat: lat_user, lng:lng_uer},
-      destination: langt,
+
+      origin: langt_user,
+      destination: langt_shop,
       travelMode: 'DRIVING'
     }, (response, status)=>{
      
