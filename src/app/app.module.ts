@@ -12,8 +12,6 @@ import { ApiProvider } from '../providers/api/api';
 import { HttpModule } from '@angular/http';
 import { MethoProvider } from '../providers/metho/metho';
 import { TabsPage } from '../pages/tabs/tabs';
-import { DatabaseProvider } from '../providers/database/database';
-import { SQLite } from '@ionic-native/sqlite';
 @NgModule({
   declarations: [
     MyApp,
@@ -22,7 +20,10 @@ import { SQLite } from '@ionic-native/sqlite';
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {
+      // Tabs config
+      tabsHideOnSubPages: true,
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -36,11 +37,9 @@ import { SQLite } from '@ionic-native/sqlite';
     Diagnostic,
     SplashScreen,
     LocationAccuracy,
-    SQLite,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiProvider,
-    MethoProvider,
-    DatabaseProvider
+    MethoProvider
     
   ]
 })

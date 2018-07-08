@@ -11,7 +11,7 @@ export class ApiProvider {
   public linkAIP : string ='nearbyvn.com/app';
   constructor(public _http: Http) {}
 
-    callApi_secret(url: string, method: string, data: string = null , request: RequestOptions = null): Observable<any>{
+    callApi(url: string, method: string, data: string = null , request: RequestOptions = null): Observable<any>{
         
         if (request == null) request = new RequestOptions();
     
@@ -33,7 +33,7 @@ export class ApiProvider {
             return this._http.post(url, data, request).map((response) => response.json()).retry(5);
         }
     }
-    callApi(url: string, method: string, data: string = null,request: RequestOptions = null): Observable<any>
+    call_map(url: string, method: string, data: string = null,request: RequestOptions = null): Observable<any>
     {
         
         if (request == null) request = new RequestOptions();

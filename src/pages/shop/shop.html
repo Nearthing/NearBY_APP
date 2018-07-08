@@ -1,10 +1,10 @@
-<ion-header no-border>
+<ion-header>
   <ion-navbar>
     <ion-title>{{point.point.nameshop}}</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="tutorial-page">
   <ion-card>
 
     <img src="assets/imgs/banh.png">
@@ -14,7 +14,7 @@
       </button>
     </ion-fab>
 
-    <ion-item>
+    <ion-item text-wrap>
       <h1>{{point.point.nameshop}}</h1>
     </ion-item>
 
@@ -26,7 +26,8 @@
         <ion-icon name="star-half"></ion-icon>
         <ion-icon name="star-outline"></ion-icon>
       </span>
-      <span item-start>( sao)</span>
+      <span item-start>(186
+        <ion-icon name="person"></ion-icon>)</span>
       <button ion-button icon-start clear item-end>
         Đánh giá
       </button>
@@ -35,33 +36,69 @@
 
   <ion-item-group>
     <ion-item-divider color="light">Thông tin địa điểm</ion-item-divider>
-    <ion-item>
-      <ion-icon name="ios-compass-outline"></ion-icon>&nbsp;&nbsp;{{point.point.address}}
+    <ion-item text-wrap (click)="mapPage()">
+      <ion-icon name="ios-compass-outline" item-start></ion-icon>{{point.point.address}}
     </ion-item>
     <ion-item>
-      <ion-icon name="ios-map-outline"></ion-icon>&nbsp;&nbsp;Khoản cách: {{point.distance.text}} </ion-item>
+      <ion-icon name="ios-map-outline" item-start></ion-icon>Khoản cách: {{point.distance.text}} </ion-item>
+    <ion-item (click)="callWithNumber(point.point.phone)">
+      <ion-icon name="ios-phone-portrait-outline" item-start></ion-icon>{{point.point.phone}}
+    </ion-item>
     <ion-item>
-      <ion-icon name="ios-phone-portrait-outline"></ion-icon>&nbsp;&nbsp;&nbsp;+84 {{point.point.phone}}
+      <ion-icon name="ios-time-outline" item-start></ion-icon>Thời gian mở cửa: 8:00 - 23:00
     </ion-item>
   </ion-item-group>
 
+  <ion-item-group>
+    <ion-item-divider color="light">Đánh giá</ion-item-divider>
+
+    <ion-slides pager>
+      <ion-slide>
+        <h5 style="color: #488aff;">
+          Đánh giá địa điểm này
+        </h5>
+        <p style="font-size: 30px">
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+        </p>
+      </ion-slide>
+      <ion-slide>
+        <h5 style="color: #488aff;">
+          Viết đánh giá ngắn
+        </h5>
+        <ion-list>
+          <ion-item>
+            <ion-input style="margin: 10px 10px 0 10px;" type="text" placeholder="Viết suy nghĩ của bạn về địa điểm này"></ion-input>
+          </ion-item>
+        </ion-list>
+        <button ion-button clear style="margin: -10px 0 0 250px;">GỬI</button>
+      </ion-slide>
+    </ion-slides>
+
+  </ion-item-group>
 
   <ion-item-group>
     <ion-item-divider color="light">Bình luận</ion-item-divider>
-    <ion-item *ngFor="let cmt of comments">
+    <ion-item *ngFor="let cmt of comments" text-wrap>
       <h5>
         <b>{{cmt.Name}}</b>
       </h5>
       <p>
         <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star-half"></ion-icon>
-        <ion-icon name="star-outline"></ion-icon>
+        <ion-icon [name]="cmt.RateStar==1? 'star-outline':'star'"></ion-icon>
+        <ion-icon [name]="(cmt.RateStar==1 || cmt.RateStar==2)? 'star-outline':'star'"></ion-icon>
+        <ion-icon [name]="(cmt.RateStar==1 || cmt.RateStar==2 || cmt.RateStar==3)? 'star-outline':'star'"></ion-icon>
+        <ion-icon [name]="(cmt.RateStar==1 || cmt.RateStar==2 || cmt.RateStar==3 || cmt.RateStar==4)? 'star-outline':'star'"></ion-icon>
         {{cmt.CommentDate}}
       </p>
       <p>{{cmt.Content}}</p>
     </ion-item>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </ion-item-group>
 
 

@@ -32,8 +32,13 @@ export class DirectionMapPage {
         var lat_shop :number =  parseFloat(this.navParams.get('lat_shop'));
         var lng_shop:number =  parseFloat(this.navParams.get('lng_shop'));
         
+        // var lat_user = 10.8194056;
+        // var lng_uer = 106.68568690000001;
+        console.log(lat_user)
+        console.log(lng_uer);
+
         this.map = new google.maps.Map(document.getElementById('map_canvas'), {
-          zoom: 15,
+          zoom: 20,
           center: {lat: lat_user, lng: lng_uer}
         });
         
@@ -44,7 +49,8 @@ export class DirectionMapPage {
   calculateAndDisplayRoute(langt_shop,langt_user) {
     console.log(langt_shop,langt_user)
     directionsService.route({
-
+      // origin: {lat: $lat, lng: $lng},
+      // destination: lang_end,
       origin: langt_user,
       destination: langt_shop,
       travelMode: 'DRIVING'
