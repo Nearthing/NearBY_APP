@@ -38,27 +38,28 @@ export class ShopPage {
   callWithNumber(mobileNumber) { window.open("tel:" + mobileNumber); }
 
   mapPage() {
-    this.navCtrl.push('DirectionMapPage', { lat_shop: this.point.point.lat, lng_shop: this.point.point.lng });
+    this.navCtrl.push('DirectionMapPage', { nameshop : this.point.point.nameshop, address: this.point.point.address });
   }
 
   RateStar(star) {
     switch (star) {
-      case 1:
+      case '1':
         this.rateStar = 1;
         break;
-      case 2:
+      case '2':
         this.rateStar = 2;
         break;
-      case 3:
+      case '3':
         this.rateStar = 3;
         break;
-      case 4:
+      case '4':
         this.rateStar = 4;
         break;
-      case 5:
+      case '5':
         this.rateStar = 5;
         break;
       default: this.rateStar = 0;
+
     }
   }
 

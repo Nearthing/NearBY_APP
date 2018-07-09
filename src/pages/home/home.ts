@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, Platform, IonicPage, AlertController, LoadingController } from 'ionic-angular';
-import {
-  GoogleMap,
-} from '@ionic-native/google-maps';
+import {GoogleMap,} from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
@@ -34,19 +32,24 @@ export class HomePage {
 
   ) { }
 
-  async ionViewDidLoad() {
+  async  ngAfterViewInit() {
     await this.platform.ready();
+    let load_ds_point = this.loadControl.create({
+      content: 'Đang tải...'
+    })
+    load_ds_point.present();
     await this.load_page(); // chay chinh thich
-    // this.test_page()
-
+    //await this.test_page()
+    load_ds_point.dismiss();
   }
   // test tren website
   test_page() {
+     //tao loading trong thoi gian loa danh sach
     let lat = 10.8194056;
     let lng = 106.68568690000001;
     this.lat_user = lat;
     this.lng_user = lng;
-    this.api.call_map(`http://${this.api.linkAIP}/getPointAround.php`, "post", "lat=" + lat + "&lng=" + lng)
+    this.api.callApi(`http://${this.api.linkAIP}/getPointAround.php`, "post", "lat=" + lat + "&lng=" + lng)
       .subscribe((result) => {
         console.log(result);
         if (result == 0) {
@@ -56,6 +59,7 @@ export class HomePage {
 
         this.call_api_llist_point(result)
       })
+      
   }
 
 
@@ -70,25 +74,23 @@ export class HomePage {
   async load_page() {
     try {
       let GPS = await this.requirement_GPS()
-      // alert(GPS);
+       console.log(GPS)
       if (GPS == false) { return };//Thoat nếu không bật GPS
 
       // GPS_lang là tọa độ của user
       let GPS_lang = await this._geolocation.getCurrentPosition()
+      console.log(GPS_lang)
       let lat = GPS_lang.coords.latitude;// vĩ độ
       let lng = GPS_lang.coords.longitude;// khinh độ
       this.lat_user = lat;
       this.lng_user = lng;
       //tao loading trong thoi gian loa danh sach
-      let load_ds_point = this.loadControl.create({
-        content: 'Đang tải...'
-      })
-      load_ds_point.present();
+     
       let arr_point = await this.call_get_arrpoint(lat, lng)
       this.arr_destinationAddress = await this.list_point({ lat: lat, lng: lng }, arr_point)
-      load_ds_point.dismiss();
+      
     } catch (err) {
-      alert(JSON.stringify(err))
+     console.log(err)
     }
   }
 
@@ -97,16 +99,17 @@ export class HomePage {
     return new Promise((resolve, reject) => {
       this._locationAccuracy.canRequest()
         .then((canRequest: boolean) => {
-          if (canRequest) {
-            this._locationAccuracy.isRequesting().then((data) => {
+          if (canRequest) {  
+            this._locationAccuracy.isRequesting().then((data)=>{
               console.log(data);
-              
               this._locationAccuracy.request(this._locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
-                .then((data) => resolve(data),
-                  error => reject(error)
-                );
-            });
-
+              .then((data) => resolve(data),
+                error => reject(error)
+              );
+            })
+             
+          } else {
+            console.log('khong yeu cau duoc GPS')
           }
 
         });//_locationAccuracy
@@ -116,7 +119,7 @@ export class HomePage {
   // lay danh sach point o server
   call_get_arrpoint(lat, lng): Promise<any[]> {
     return new Promise((resolve, reject) => {
-      this.api.call_map(`http://${this.api.linkAIP}/getPointAround.php`, "post", "lat=" + lat + "&lng=" + lng)
+      this.api.callApi(`http://${this.api.linkAIP}/getPointAround.php`, "post", "lat=" + lat + "&lng=" + lng)
         .subscribe((result) => {
           console.log(result)
           resolve(result);
@@ -171,11 +174,8 @@ export class HomePage {
 
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
-
-    setTimeout(() => {
-      this.load_page();
+      this. ngAfterViewInit();
       refresher.complete();
-    }, 2000);
   }
 
   doInfinite(infiniteScroll) {

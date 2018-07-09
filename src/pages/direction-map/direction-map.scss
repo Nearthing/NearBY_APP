@@ -2,4 +2,12 @@ page-direction-map {
     #map_canvas {
         height: 100%;
       }
+      #infowindow {
+          width: 230px;
+         // word-wrap: break-word;
+      }
+      #infowindow p{
+        margin:0px;
+       // word-wrap: break-word;
+    }
 }

@@ -26,8 +26,7 @@
         <ion-icon name="star-half"></ion-icon>
         <ion-icon name="star-outline"></ion-icon>
       </span>
-      <span item-start>(186
-        <ion-icon name="person"></ion-icon>)</span>
+      <span item-start>(186<ion-icon name="person"></ion-icon>)</span>
       <button ion-button icon-start clear item-end>
         Đánh giá
       </button>
@@ -58,13 +57,12 @@
           Đánh giá địa điểm này
         </h5>
         <p style="font-size: 30px">
-            <ion-icon [name]="(rateStar==0)? 'star-outline':'star'" (click)="RateStar(1)"></ion-icon>
-            <ion-icon [name]="(rateStar==0 || rateStar==1)? 'star-outline':'star'" (click)="RateStar(2)"></ion-icon>
-            <ion-icon [name]="(rateStar==0 || rateStar==1 || rateStar==2)? 'star-outline':'star'" (click)="RateStar(3)"></ion-icon>
-            <ion-icon [name]="(rateStar==0 || rateStar==1 || rateStar==2 || rateStar==3)? 'star-outline':'star'" (click)="RateStar(4)"></ion-icon>
-            <ion-icon [name]="(rateStar==0 || rateStar==1 || rateStar==2 || rateStar==3 || rateStar==4)? 'star-outline':'star'" (click)="RateStar(5)"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
         </p>
-        <!-- <button ion-button clear style="margin: -10px 0 0 250px;" (click)="next()">TIẾP</button> -->
       </ion-slide>
       <ion-slide>
         <h5 style="color: #488aff;">
@@ -72,11 +70,7 @@
         </h5>
         <ion-list>
           <ion-item>
-            <ion-label color="primary" stacked>Tên bạn là gì nhỉ?</ion-label>
-            <ion-input type="text" placeholder=""></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input type="text" placeholder="Viết suy nghĩ của bạn về địa điểm này"></ion-input>
+            <ion-input style="margin: 10px 10px 0 10px;" type="text" placeholder="Viết suy nghĩ của bạn về địa điểm này"></ion-input>
           </ion-item>
         </ion-list>
         <button ion-button clear style="margin: -10px 0 0 250px;">GỬI</button>

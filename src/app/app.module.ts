@@ -10,8 +10,9 @@ import { Diagnostic } from '@ionic-native/diagnostic';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { ApiProvider } from '../providers/api/api';
 import { HttpModule } from '@angular/http';
-import { MethoProvider } from '../providers/metho/metho';
 import { TabsPage } from '../pages/tabs/tabs';
+import { SQLite } from '@ionic-native/sqlite';
+import { DatabaseProvider } from '../providers/database/database';
 @NgModule({
   declarations: [
     MyApp,
@@ -36,10 +37,11 @@ import { TabsPage } from '../pages/tabs/tabs';
     Geolocation,
     Diagnostic,
     SplashScreen,
+    DatabaseProvider,
     LocationAccuracy,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiProvider,
-    MethoProvider
+    SQLite
     
   ]
 })

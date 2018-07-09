@@ -1,0 +1,38 @@
+<ion-header>
+
+  <ion-navbar >
+    <ion-title>Đăng nhập</ion-title>
+    <button  ion-button (click)="logout()">logout</button>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form *ngIf="not_login == true" [formGroup]="member" (ngSubmit)="login()">
+    <ion-list>
+        
+      <ion-item >
+        <ion-label floating>Tài khoản </ion-label>
+        <ion-input formControlName='phone' type="number" ></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label floating>Mật khẩu </ion-label>
+        <ion-input formControlName='password' type="password"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <button ion-button block [disabled]="!member.valid"  type ="submit" >Đăng nhập</button>
+  </form>
+
+  <ion-card  *ngIf="not_login == false && user">
+    <ion-item text-wrap>
+     {{user.phone}}
+    </ion-item>
+    <ion-item text-wrap>
+      {{user.id}}
+     </ion-item>
+  </ion-card>
+</ion-content>
+<!-- [disabled]="!user.valid" -->

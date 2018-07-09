@@ -7,11 +7,12 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ApiProvider {
 
-  //public linkAIP : string = '192.168.100.5/nearthing';
-  public linkAIP : string ='nearbyvn.com/app';
+  //spublic linkAIP : string = '10.255.230.238/Nearbyvn/app';
+   public linkAIP : string ='nearbyvn.com/app';
+
   constructor(public _http: Http) {}
 
-    callApi(url: string, method: string, data: string = null , request: RequestOptions = null): Observable<any>{
+    callApi_JWT(url: string, method: string, data: string = null , request: RequestOptions = null): Observable<any>{
         
         if (request == null) request = new RequestOptions();
     
@@ -33,7 +34,7 @@ export class ApiProvider {
             return this._http.post(url, data, request).map((response) => response.json()).retry(5);
         }
     }
-    call_map(url: string, method: string, data: string = null,request: RequestOptions = null): Observable<any>
+    callApi(url: string, method: string, data: string = null,request: RequestOptions = null): Observable<any>
     {
         
         if (request == null) request = new RequestOptions();
