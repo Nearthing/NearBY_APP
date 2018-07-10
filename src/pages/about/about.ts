@@ -62,9 +62,14 @@ export class AboutPage {
     console.log('login member:',member)
     // chayj loading de check login
     let loading = this.loadingCtrl.create({
-      spinner: 'bubbles',
-      content: `Đang đăng nhập ...`,
-    });
+      spinner: 'hide',
+      content: `
+      <div class="custom-spinner-container">
+        <img class="loading" src="assets/icon/slack_load.gif" />
+      </div>`,
+    cssClass :"css_loading"
+    })
+   
     loading.present();
     // gui yeu cau kiem tra account
       this.api.callApi(`http://${this.api.linkAIP}/sginIn_nember.php`,
@@ -81,8 +86,11 @@ export class AboutPage {
                 return;
               }
           this.user = res;
-          loading.dismiss();
-          this.not_login = false
+          setTimeout(()=>{
+            loading.dismiss();
+            this.not_login = false
+          },1000);
+          
           sessionStorage.setItem("id_member",res.id);
           sessionStorage.setItem('user_token',res.jwt)
           this.db.putUser(res.id,res.jwt);
@@ -105,17 +113,28 @@ export class AboutPage {
       }
      
       this.user = data;
-        // console.log('login_auto thanh cong',data);
-        // console.log('login_auto this.user-->',this.user);
     })
   }//---->login_auto
 
   public logout()
   {
-    this.user = null;
-    this.not_login = true;
-    this.db.Delete("DELETE FROM Account");
-    this.ionViewDidLoad();
+    var load_lout = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: `
+      <div class="custom-spinner-container">
+        <img class="loading" src="assets/icon/slack_load.gif" />
+      </div>`,
+    cssClass :"css_loading"
+    })
+    load_lout.present();
+    setTimeout(()=>{
+      this.user = null;
+      this.not_login = true;
+      load_lout.dismiss()
+      this.db.Delete("DELETE FROM Account");
+       this.ionViewDidLoad();
+    },1000)
+    
   }//--->logout
 
 }

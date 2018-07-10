@@ -7,35 +7,35 @@
 </ion-header>
 
 <ion-content >
-    <form *ngIf="not_login == true" [formGroup]="member" (ngSubmit)="login()" padding>
+    <form *ngIf="not_login == true" [formGroup]="member" (ngSubmit)="login()" padding-left padding-right>
         <ion-list>
             
           <ion-item >
-            <ion-label floating>Số điện thoại </ion-label>
-            <ion-input  formControlName='phone' type="number" ></ion-input>
+              <ion-label stacked>Số điện thoại</ion-label>
+            <ion-input formControlName='phone' type="number" ></ion-input>
           </ion-item>
         
           <ion-item>
-            <ion-label floating>Mật khẩu </ion-label>
-            <ion-input formControlName='password' type="password"></ion-input>
+              <ion-label stacked>Mật khẩu</ion-label>
+            <ion-input  formControlName='password' type="password"></ion-input>
           </ion-item>
         </ion-list>
         
         <button ion-button block color="secondary" [disabled]="!member.valid"  type ="submit" >Đăng nhập</button>
         
       </form>
-      <div  *ngIf="not_login == true" padding >
+      <div  *ngIf="not_login == true" padding  >
         <hr>
-        <button class="bnt_google" ion-button color="danger" block>Google</button>
-        <button ion-button block>Facebook</button>
+        <button class="bnt_google" ion-button color="danger" block> Google</button>
+        <button ion-button block> Facebook</button>
         <p class = "p_sginUP" ><button ion-button ion-btn clear  [navPush]="SginupPage" >  Đăng ký </button></p>
-      </div>
+      </div>  
 
       <ion-card  *ngIf="not_login == false && user">
 
           <ion-item>
             <ion-avatar item-start>
-              <img src="assets/imgs/shopnho.png">
+              <img src="assets/imgs/user.png">
             </ion-avatar>
             <h2>{{user.name}}</h2>
             <p>November 5, 1955</p>
@@ -68,7 +68,7 @@
   
 
 
-  <ion-list>
+  <ion-list *ngIf="not_login == false">
 
     <ion-list-header>
       TÀI KHOẢN CÁ NHÂN
@@ -77,16 +77,21 @@
     <ion-item>
       <ion-icon name='contact' item-start></ion-icon>
       Thông tin cá nhân
-      <!-- <ion-note item-end>The boy who lived</ion-note> -->
+     
     </ion-item>
 
     <ion-item>
       <ion-icon name='clock' item-start></ion-icon>
       Lịch sử đánh giá
-      <!-- <ion-note item-end>Muggle-born</ion-note> -->
     </ion-item>
+    <ion-item (click)="logout()">
+      <ion-icon  name='exit' item-start></ion-icon>
+      Đăng xuất
+      <!-- <ion-note item-end>Yes please</ion-note> -->
+    </ion-item>
+
   </ion-list>
-  <ion-list>
+  <ion-list >
     <ion-list-header>
       HỖ TRỢ & CÀI ĐẶT
     </ion-list-header>
@@ -105,11 +110,5 @@
       <ion-icon name='information-circle' item-start></ion-icon>
     </ion-item>
 
-
-    <ion-item (click)="logout()">
-      <ion-icon  name='exit' item-start></ion-icon>
-      Đăng xuất
-      <!-- <ion-note item-end>Yes please</ion-note> -->
-    </ion-item>
   </ion-list>
 </ion-content>

@@ -5,6 +5,19 @@
 .back-button {
     color: white !important;
 }
+body,html{
+    font-family: 'Montserrat', sans-serif;
+}
+ion-backdrop{
+    opacity: 0 !important;
+}
+.loading-md .loading-wrapper{
+        opacity: 1;
+        -webkit-box-shadow : none;
+        box-shadow: none;
+        background: none;
+}
+
 // .tabs .tabbar {
 //     background-color: #1c4d30;
 // }

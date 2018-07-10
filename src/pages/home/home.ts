@@ -35,11 +35,16 @@ export class HomePage {
   async  ngAfterViewInit() {
     await this.platform.ready();
     let load_ds_point = this.loadControl.create({
-      content: 'Đang tải...'
+      spinner: 'hide',
+      content: `
+          <div class="custom-spinner-container">
+            <img class="loading" src="assets/icon/slack_load.gif"  />
+          </div>`,
+        cssClass :"css_loading"
     })
     load_ds_point.present();
-    //await this.load_page(); // chay chinh thich
-    await this.test_page()
+    await this.load_page(); 
+    //await this.test_page()
     load_ds_point.dismiss();
   }
   // test tren website
