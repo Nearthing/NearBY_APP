@@ -13,6 +13,8 @@ import { HttpModule } from '@angular/http';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SQLite } from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../providers/database/database';
+import { ValidatorProvider } from '../providers/validator/validator';
+import { CustomFormsModule } from 'ng2-validation'
 @NgModule({
   declarations: [
     MyApp,
@@ -20,6 +22,7 @@ import { DatabaseProvider } from '../providers/database/database';
   ],
   imports: [
     BrowserModule,
+    CustomFormsModule,
     HttpModule,
     IonicModule.forRoot(MyApp, {
       // Tabs config
@@ -41,7 +44,8 @@ import { DatabaseProvider } from '../providers/database/database';
     LocationAccuracy,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiProvider,
-    SQLite
+    SQLite,
+    ValidatorProvider
     
   ]
 })

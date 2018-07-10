@@ -1,0 +1,54 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title >
+          Đăng ký
+        </ion-title>
+      </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="user_sginup" (ngSubmit)="sginup()">
+    <ion-list>
+      <ion-item >
+        <ion-label floating>Tên của bạn </ion-label>
+        <ion-input formControlName='name' type="text" ></ion-input>
+      </ion-item>
+      <ion-item no-lines  *ngIf="!user_sginup.controls.name.valid  && (user_sginup.controls.name.dirty || submitAttempt) || user_sginup.controls.name.value.trim() ==''">
+        <p  class="error_form">Vui lòng nhập tên của bạn </p>
+      </ion-item>
+      <ion-item >
+        <ion-label floating>Số điện thoại </ion-label>
+        <ion-input #phone_sginUP formControlName='phone' type="number" ></ion-input>
+      </ion-item>
+      <ion-item no-lines  *ngIf="!user_sginup.controls.phone.valid  && (user_sginup.controls.phone.dirty || submitAttempt) ">
+        <p  class="error_form">Vui lòng nhập số điện thoại</p>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label floating>Mật khẩu </ion-label>
+        <ion-input formControlName='password' type="password"></ion-input>
+      </ion-item >
+      <ion-item no-lines *ngIf="!user_sginup.controls.password.valid  && (user_sginup.controls.password.dirty || submitAttempt) || user_sginup.controls.password.value.trim() ==''">
+        <p    class="error_form">Vui lòng nhập password</p>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Xác nhận mật khẩu </ion-label>
+        <ion-input formControlName='again_password' type="password"></ion-input>
+      </ion-item>
+      <ion-item no-lines  *ngIf="!user_sginup.controls.again_password.valid  && (user_sginup.controls.again_password.dirty || submitAttempt)" >
+        <p class="error_form">Mật khẩu xác nhận không đúng</p>
+      </ion-item>
+    </ion-list>
+    
+    <button ion-button block color="secondary"  [disabled]="!user_sginup.valid"  type ="submit" >Đăng ký</button>
+    
+  </form>
+  <div pading>
+    <p>Chú ý:</p>
+    <p>Thông tin của bạn sẽ được bảo mật và không dùng để kinh doanh.</p>
+  </div>
+</ion-content>
+
+ 

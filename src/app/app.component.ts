@@ -10,7 +10,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 })
 export class MyApp {
    rootPage:any = TabsPage;
-  //rootPage:any = 'LoginPage';
+  //rootPage:any = 'AboutPage';
   constructor(platform: Platform, statusBar: StatusBar,
     public db : DatabaseProvider,
     splashScreen: SplashScreen) {

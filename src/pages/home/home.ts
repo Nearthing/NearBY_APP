@@ -38,8 +38,8 @@ export class HomePage {
       content: 'Đang tải...'
     })
     load_ds_point.present();
-    await this.load_page(); // chay chinh thich
-    //await this.test_page()
+    //await this.load_page(); // chay chinh thich
+    await this.test_page()
     load_ds_point.dismiss();
   }
   // test tren website

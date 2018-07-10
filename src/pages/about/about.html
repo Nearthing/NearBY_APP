@@ -6,7 +6,68 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content >
+    <form *ngIf="not_login == true" [formGroup]="member" (ngSubmit)="login()" padding>
+        <ion-list>
+            
+          <ion-item >
+            <ion-label floating>Số điện thoại </ion-label>
+            <ion-input  formControlName='phone' type="number" ></ion-input>
+          </ion-item>
+        
+          <ion-item>
+            <ion-label floating>Mật khẩu </ion-label>
+            <ion-input formControlName='password' type="password"></ion-input>
+          </ion-item>
+        </ion-list>
+        
+        <button ion-button block color="secondary" [disabled]="!member.valid"  type ="submit" >Đăng nhập</button>
+        
+      </form>
+      <div  *ngIf="not_login == true" padding >
+        <hr>
+        <button class="bnt_google" ion-button color="danger" block>Google</button>
+        <button ion-button block>Facebook</button>
+        <p class = "p_sginUP" ><button ion-button ion-btn clear  [navPush]="SginupPage" >  Đăng ký </button></p>
+      </div>
+
+      <ion-card  *ngIf="not_login == false && user">
+
+          <ion-item>
+            <ion-avatar item-start>
+              <img src="assets/imgs/shopnho.png">
+            </ion-avatar>
+            <h2>{{user.name}}</h2>
+            <p>November 5, 1955</p>
+          </ion-item>
+        
+          <!-- <img src="img/advance-card-bttf.png"> -->
+              
+          <ion-row>
+            <ion-col>
+              <button ion-button icon-start clear small>
+                <ion-icon name="md-star"></ion-icon>
+                <div> 12 Vinh danh</div>
+              </button>
+            </ion-col>
+            <ion-col>
+              <button ion-button icon-start clear small>
+                <ion-icon name="text"></ion-icon>
+                <div>4 Đánh giá</div>
+              </button>
+            </ion-col>
+            <ion-col center text-center>
+              <ion-note>
+                11h 
+              </ion-note>
+            </ion-col>
+          </ion-row>
+        
+        </ion-card>
+
+  
+
+
   <ion-list>
 
     <ion-list-header>
@@ -45,8 +106,8 @@
     </ion-item>
 
 
-    <ion-item>
-      <ion-icon name='exit' item-start></ion-icon>
+    <ion-item (click)="logout()">
+      <ion-icon  name='exit' item-start></ion-icon>
       Đăng xuất
       <!-- <ion-note item-end>Yes please</ion-note> -->
     </ion-item>
