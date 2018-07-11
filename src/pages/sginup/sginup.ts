@@ -28,9 +28,10 @@ export class SginupPage {
  
   validate()
   {  
-    let password = new FormControl('', Validators.required);
+
+    let password = new FormControl('', [Validators.required,this.noWhitespaceValidator]);
     let again_password = new FormControl('' ,CustomValidators.equalTo(password));
-    let name = new FormControl('', Validators.required);
+    let name = new FormControl('', [Validators.required,this.noWhitespaceValidator]);
     this.user_sginup = this.formBuilder.group({
       name:name,
       phone: ['', Validators.compose([Validators.minLength(10), Validators.maxLength(12),Validators.required])],
@@ -39,6 +40,12 @@ export class SginupPage {
   
     });
   }//---->validate'', CustomValidators.equalTo(password)
+  //========= tao ham trim()
+  public noWhitespaceValidator(control: FormControl) {
+    let isWhitespace = (control.value || '').trim().length === 0;
+    let isValid = !isWhitespace;
+    return isValid ? null : { 'whitespace': true }
+}//-->> trim
   sginup(){
      
     console.log(this.user_sginup.controls);

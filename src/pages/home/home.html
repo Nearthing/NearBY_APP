@@ -14,9 +14,12 @@
     <ion-refresher-content pullingIcon="arrow-dropdown" refreshingSpinner="circles"></ion-refresher-content>
   </ion-refresher>
   <div class="label1">
-    <p>
-      <ion-icon name="md-pin"></ion-icon> Địa điểm gần đây</p>
+    <p><ion-icon name="md-pin"></ion-icon> Địa điểm gần đây</p>
+    <h3 *ngIf="alert_refresh" style="color:rgb(250, 52, 52)">{{alert_refresh}}</h3>
   </div>
+  
+  
+
   <ion-list *ngIf='arr_destinationAddress'>
     <ion-item *ngFor='let point of arr_destinationAddress' (click)="push_shop(point)">
       <ion-thumbnail item-start>

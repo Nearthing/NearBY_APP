@@ -12,29 +12,30 @@
   <form [formGroup]="user_sginup" (ngSubmit)="sginup()">
     <ion-list>
       <ion-item >
-        <ion-label floating>Tên của bạn </ion-label>
+    
+        <ion-label stacked>Tên của bạn </ion-label>
         <ion-input formControlName='name' type="text" ></ion-input>
       </ion-item>
-      <ion-item no-lines  *ngIf="!user_sginup.controls.name.valid  && (user_sginup.controls.name.dirty || submitAttempt) || user_sginup.controls.name.value.trim() ==''">
+      <ion-item no-lines  *ngIf="!user_sginup.controls.name.valid  && (user_sginup.controls.name.dirty ) ">
         <p  class="error_form">Vui lòng nhập tên của bạn </p>
       </ion-item>
       <ion-item >
-        <ion-label floating>Số điện thoại </ion-label>
+        <ion-label stacked>Số điện thoại </ion-label>
         <ion-input #phone_sginUP formControlName='phone' type="number" ></ion-input>
       </ion-item>
-      <ion-item no-lines  *ngIf="!user_sginup.controls.phone.valid  && (user_sginup.controls.phone.dirty || submitAttempt) ">
+      <ion-item no-lines  *ngIf="!user_sginup.controls.phone.valid  && (user_sginup.controls.phone.dirty ) ">
         <p  class="error_form">Vui lòng nhập số điện thoại</p>
       </ion-item>
     
       <ion-item>
-        <ion-label floating>Mật khẩu </ion-label>
+        <ion-label stacked>Mật khẩu </ion-label>
         <ion-input formControlName='password' type="password"></ion-input>
       </ion-item >
-      <ion-item no-lines *ngIf="!user_sginup.controls.password.valid  && (user_sginup.controls.password.dirty || submitAttempt) || user_sginup.controls.password.value.trim() ==''">
+      <ion-item no-lines *ngIf="!user_sginup.controls.password.valid  && (user_sginup.controls.password.dirty ) ">
         <p    class="error_form">Vui lòng nhập password</p>
       </ion-item>
       <ion-item>
-        <ion-label floating>Xác nhận mật khẩu </ion-label>
+        <ion-label stacked>Xác nhận mật khẩu </ion-label>
         <ion-input formControlName='again_password' type="password"></ion-input>
       </ion-item>
       <ion-item no-lines  *ngIf="!user_sginup.controls.again_password.valid  && (user_sginup.controls.again_password.dirty || submitAttempt)" >

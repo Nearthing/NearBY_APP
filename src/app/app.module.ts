@@ -41,6 +41,7 @@ import { CustomFormsModule } from 'ng2-validation'
     Diagnostic,
     SplashScreen,
     DatabaseProvider,
+    
     LocationAccuracy,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiProvider,

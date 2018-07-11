@@ -1,33 +1,9 @@
 import { Injectable } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 
 @Injectable()
 export class ValidatorProvider {
 
-  static areEqual(formGroup: FormGroup) {
-    let val;
-    let valid = true;
-  
-    for (let key in formGroup.controls) {
-      if (formGroup.controls.hasOwnProperty(key)) {
-        let control: FormControl = <FormControl>formGroup.controls[key];
-        if (val === undefined) {
-          val = control.value
-        } else {
-          if (val !== control.value) {
-            valid = false;
-            break;
-          }
-        }
-      }
-    }
-    if (valid) {
-      return null;
-    }
-    return {
-      areEqual: true
-    }
-   }
-   
+
 }

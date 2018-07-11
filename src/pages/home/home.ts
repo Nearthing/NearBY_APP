@@ -20,7 +20,9 @@ export class HomePage {
   public lat_user: number
   public lng_user: number
   public arr_destinationAddress: any
-  public tieudedi: any[];
+
+  public alert_refresh:string;
+  //------> constructor ----
   constructor(public navCtrl: NavController,
     private _geolocation: Geolocation,
     public platform: Platform,
@@ -32,7 +34,7 @@ export class HomePage {
 
   ) { }
 
-  async  ngAfterViewInit() {
+  async  ionViewDidLoad() {
     await this.platform.ready();
     let load_ds_point = this.loadControl.create({
       spinner: 'hide',
@@ -46,6 +48,7 @@ export class HomePage {
     await this.load_page(); 
     //await this.test_page()
     load_ds_point.dismiss();
+    this.alert_refresh = null;
   }
   // test tren website
   test_page() {
@@ -78,13 +81,12 @@ export class HomePage {
 
   async load_page() {
     try {
+      
       let GPS = await this.requirement_GPS()
-       console.log(GPS)
-      if (GPS == false) { return };//Thoat nếu không bật GPS
-
+       console.log("requirement_GPS",GPS)
       // GPS_lang là tọa độ của user
       let GPS_lang = await this._geolocation.getCurrentPosition()
-      console.log(GPS_lang)
+      console.log('GPS_lang',GPS_lang)
       let lat = GPS_lang.coords.latitude;// vĩ độ
       let lng = GPS_lang.coords.longitude;// khinh độ
       this.lat_user = lat;
@@ -95,29 +97,65 @@ export class HomePage {
       this.arr_destinationAddress = await this.list_point({ lat: lat, lng: lng }, arr_point)
       
     } catch (err) {
-     console.log(err)
+     console.log('errrr',err)
+          if(err.message = "Illegal Access" && err.code == 1) {
+            this.alert.create({
+              title:"<h4 style='color:red'>Cảnh Báo</h4>",
+              message:'Bạn hãy cân nhấc, nếu vô tình hãy cấp lại quyền vi tri cho ứng dụng',
+              buttons:[
+              {
+                text:'Từ chối',
+                cssClass:'color_button',
+                handler:()=>{return;},
+               
+              },
+              {
+                cssClass:'color_button',
+                text: 'Cài đặt vị trí',
+                handler:()=>{
+                  this._Diagnostic.switchToSettings().then(()=>{
+                  this.alert_refresh = "Kéo xuống để tải địa điêm nhé."
+                  })
+                 
+                  },
+               
+              }
+            ],
+              
+            }).present()
+           
+          }
     }
   }
 
   //yeu cau thiet bi phai bat GPS
-  requirement_GPS(): Promise<any> {
+ async requirement_GPS(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._locationAccuracy.canRequest()
-        .then((canRequest: boolean) => {
-          if (canRequest) {  
-            this._locationAccuracy.isRequesting().then((data)=>{
-              console.log(data);
-              this._locationAccuracy.request(this._locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
-              .then((data) => resolve(data),
-                error => reject(error)
-              );
-            })
-             
+      this._Diagnostic.isGpsLocationEnabled().then((data)=>{
+        this._locationAccuracy.canRequest().then(data_canreques =>{
+          if(data_canreques) {
+                this._locationAccuracy.request(this._locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
+              .then(data =>{
+                console.log('request GPS',data)
+                resolve(data)
+              },err=>{
+                reject(err)
+              })
           } else {
-            console.log('khong yeu cau duoc GPS')
+              this._locationAccuracy.request(this._locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
+              .then(data =>{
+                console.log('request GPS',data)
+                resolve(data)
+              },err=>{
+                reject(err)
+              })
           }
+        })
+          
+        
+         
+      })
 
-        });//_locationAccuracy
 
     })
   }
@@ -134,8 +172,6 @@ export class HomePage {
 
 
   public list_point($user_lang, $arrpoint): Promise<any[]> {
-
-
 
     var arr_point = [];
     $arrpoint.forEach(element => {
@@ -179,7 +215,7 @@ export class HomePage {
 
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
-      this. ngAfterViewInit();
+      this. ionViewDidLoad();
       refresher.complete();
   }
 

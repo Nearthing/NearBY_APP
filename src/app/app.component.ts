@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { DatabaseProvider } from '../providers/database/database';
 import { TabsPage } from '../pages/tabs/tabs';
 
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -27,10 +28,9 @@ export class MyApp {
   {
     await this.db.createTbale() ; 
     let member_sql :any = await this.db.getUser()
-    console.log(member_sql);
     if(member_sql == false) {
       sessionStorage.setItem('not_login','false')
-      console.log('chua lay duoc user_token')
+      
     } else {
        sessionStorage.setItem('not_login','true')
        sessionStorage.setItem('user_token',member_sql);
