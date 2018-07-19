@@ -1,25 +1,24 @@
-<ion-header no-border>
+
+<ion-header>
+
   <ion-navbar>
     <ion-title align="center">
       <img src="assets/imgs/logo.png" alt="" style="height: 35px;">
     </ion-title>
   </ion-navbar>
-
-  <ion-searchbar (click)="push_search()" placeholder="Bạn muốn tìm gì?"></ion-searchbar>
+  <ion-searchbar #searchbar debounce = 800 [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel" (ionInput)="search($event)" (ionCancel)="onCancel($event)"
+  placeholder="Bạn muốn tìm gì?" animated="true" autocomplete="true">
+</ion-searchbar>
 </ion-header>
 
 <ion-content>
-  <ion-refresher (ionRefresh)="doRefresh($event)" no-border>
-    <ion-refresher-content pullingIcon="arrow-dropdown" refreshingSpinner="circles"></ion-refresher-content>
-  </ion-refresher>
   <div class="label1">
     <p><ion-icon name="md-pin"></ion-icon> Địa điểm gần đây</p>
-    <h3 *ngIf="alert_refresh" style="color:rgb(250, 52, 52)">{{alert_refresh}}</h3>
   </div>
   
-  
+  <h2 class="label1" *ngIf="arr_destinationAddress == 0">không tìm thấy</h2>
 
-  <ion-list class="animate-ripple" *ngIf='arr_destinationAddress'>
+  <ion-list class="animate-ripple" *ngIf='arr_destinationAddress != 0'>
     <button ion-item *ngFor='let point of arr_destinationAddress' (click)="push_shop(point)">
       <ion-thumbnail item-start>
         <img [src]="point.point.nameshop ? 'assets/imgs/'+point.point.icon : ''">

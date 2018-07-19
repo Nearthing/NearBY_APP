@@ -13,8 +13,10 @@ import { HttpModule } from '@angular/http';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SQLite } from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../providers/database/database';
-import { ValidatorProvider } from '../providers/validator/validator';
+
 import { CustomFormsModule } from 'ng2-validation'
+import { GpsProvider } from '../providers/gps/gps';
+import { Camera } from '../../node_modules/@ionic-native/camera';
 @NgModule({
   declarations: [
     MyApp,
@@ -46,7 +48,8 @@ import { CustomFormsModule } from 'ng2-validation'
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiProvider,
     SQLite,
-    ValidatorProvider
+    GpsProvider,
+    Camera
     
   ]
 })

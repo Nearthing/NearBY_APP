@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content >
-    <form *ngIf="not_login == true" [formGroup]="member" (ngSubmit)="login()" padding-left padding-right>
+    <form *ngIf="_login == false" [formGroup]="member" (ngSubmit)="login()" padding-left padding-right>
         <ion-list>
             
           <ion-item >
@@ -24,14 +24,14 @@
         <button ion-button block color="secondary" [disabled]="!member.valid"  type ="submit" >Đăng nhập</button>
         
       </form>
-      <div  *ngIf="not_login == true" padding  >
+      <div  *ngIf="_login == false" padding  >
         <hr>
         <button class="bnt_google" ion-button color="danger" block> Google</button>
         <button ion-button block> Facebook</button>
         <p class = "p_sginUP" ><button ion-button ion-btn clear  [navPush]="SginupPage" >  Đăng ký </button></p>
       </div>  
 
-      <ion-card  *ngIf="not_login == false && user">
+      <ion-card  *ngIf="_login == true && user">
 
           <ion-item>
             <ion-avatar item-start>
@@ -68,7 +68,7 @@
   
 
 
-  <ion-list *ngIf="not_login == false">
+  <ion-list *ngIf="_login == true">
 
     <ion-list-header>
       TÀI KHOẢN CÁ NHÂN

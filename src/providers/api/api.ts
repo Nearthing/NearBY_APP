@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ApiProvider {
 
-  //spublic linkAIP : string = '10.255.230.238/Nearbyvn/app';
+  //public linkAIP : string = '192.168.100.5/Nearbyvn/app';
    public linkAIP : string ='nearbyvn.com/app';
 
   constructor(public _http: Http) {}

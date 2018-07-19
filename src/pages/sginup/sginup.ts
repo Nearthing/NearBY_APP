@@ -22,9 +22,7 @@ export class SginupPage {
       this.validate();
   }
 
-  ionViewDidLoad() {
-    
-  }
+  ionViewDidLoad() {}
  
   validate()
   {  

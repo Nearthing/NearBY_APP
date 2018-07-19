@@ -14,7 +14,7 @@ export class AboutPage {
   private member: FormGroup;
   public user :any;
   submitAttempt: boolean = false;
-  public not_login : boolean = true;
+  public _login : boolean = false;
   public SginupPage = "SginupPage"
   constructor(public navCtrl: NavController, 
     public loadingCtrl:LoadingController,
@@ -26,8 +26,8 @@ export class AboutPage {
     public navParams: NavParams) 
     {  
       this.validate();
-       if(sessionStorage.getItem('not_login') == 'true'){
-        this.not_login = false;
+       if(sessionStorage.getItem('login') == 'true'){
+        this._login = true;
         this.login_auto();
       } else {
         console.log('khong lay duoc sesstion jwt')
@@ -86,9 +86,10 @@ export class AboutPage {
                 return;
               }
           this.user = res;
+          sessionStorage.setItem('login','true');
           setTimeout(()=>{
             loading.dismiss();
-            this.not_login = false
+            this._login = true
           },1000);
           
           sessionStorage.setItem("id_member",res.id);
@@ -107,11 +108,12 @@ export class AboutPage {
     "post").subscribe((data)=>{
       if(data == 0) {
         this.db.Delete("DELETE FROM Account");
-        this.not_login = true;
+        this._login = false;
+        
         this.ionViewDidLoad();
         return;
       }
-     
+      sessionStorage.setItem("id_member",data.id);
       this.user = data;
     })
   }//---->login_auto
@@ -126,10 +128,11 @@ export class AboutPage {
       </div>`,
     cssClass :"css_loading"
     })
+    sessionStorage.setItem('login','false');
     load_lout.present();
     setTimeout(()=>{
       this.user = null;
-      this.not_login = true;
+      this._login = false;
       load_lout.dismiss()
       this.db.Delete("DELETE FROM Account");
        this.ionViewDidLoad();

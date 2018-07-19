@@ -1,0 +1,80 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>createShop</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+  <p align="center" *ngIf="login == 'false'">
+    YÊU CẦU ĐĂNG NHẬP TRƯỚC KHI SỬ DỤNG CHỨC NĂNG
+  </p>
+
+
+
+  <ion-list *ngIf="login == 'true'">
+    <ion-list-header>
+      <h1>Nhập thông tin cửa hàng</h1>
+    </ion-list-header>
+    <ion-item>
+      <ion-label stacked>Tên của hàng</ion-label>
+      <ion-input type="text" #name></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Từ khóa tìm kiếm</ion-label>
+      <ion-input type="text" #keyword></ion-input>
+    </ion-item>
+    <form id="form_geo" padding>
+        <ion-label style="color: green" stacked>Đại chỉ</ion-label>
+      <input type="text" id="address" style="width: 100%;border:none;height: 50px;" class="form-control" #address required="required" placeholder=" ">
+      <ion-input name="lat" id="lat" class="form-control" type="hidden" readonly></ion-input>
+      <ion-input name="lng" id="lng" class="form-control" type="hidden" readonly> </ion-input>
+    </form>
+    <div id="map_canvas" ></div>
+
+    <ion-item>
+      <ion-label stacked>Điện thoại</ion-label>
+      <ion-input type="text" #phone></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Giờ mở cửa</ion-label>
+      <ion-input type="text" #opentime></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Giờ đóng cửa</ion-label>
+      <ion-input type="text" #closetime></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-card>
+        <img [src]="base64Image" />
+      </ion-card>
+      <div item-end>
+        <button ion-button (click)="openCamera()" item-end>
+          <ion-icon name="camera"></ion-icon> &nbsp;Chụp</button>
+        <br />
+        <button ion-button (click)="openGallery()" item-end>
+          <ion-icon name="camera"></ion-icon> &nbsp;Thu vien</button>
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Danh mục</ion-label>
+      <ion-select [(ngModel)]="danhmuc" #catagory>
+        <ion-option value="4">Shop nhỏ</ion-option>
+        <ion-option value="6">Quán nhậu</ion-option>
+        <ion-option value="7">Ăn vặt</ion-option>
+        <ion-option value="3">Nhà hàng</ion-option>
+        <ion-option value="8">Bia clup</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <button ion-button full (click)="AddNewShop(name.value,keyword.value,address.value,phone.value,opentime.value,closetime.value,catagory.value)">Lưu</button>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

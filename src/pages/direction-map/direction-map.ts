@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { GpsProvider } from '../../providers/gps/gps';
+import { Diagnostic } from '@ionic-native/diagnostic';
 
 declare var google
 var directionsService = new google.maps.DirectionsService;
@@ -15,8 +17,12 @@ export class DirectionMapPage {
   
   public shop:any;
   public map: any;
+
   constructor(public navCtrl: NavController, 
     public platforms: Platform,public _geolocation: Geolocation,
+    public service_GPS: GpsProvider,
+    public alert:AlertController,
+    public _Diagnostic: Diagnostic,
     public navParams: NavParams) {}
 
  async ionViewDidLoad() {
@@ -24,27 +30,65 @@ export class DirectionMapPage {
       this.initMap();
   }
   // khoi tao bản đồ
-   initMap() {
-      this._geolocation.getCurrentPosition().then((GPS_lang)=>{
-         let lat_user = GPS_lang.coords.latitude;// vĩ độ
-         let lng_uer = GPS_lang.coords.longitude;// khinh độ
-        //var lat_user = 10.8194056;
-        //var lng_uer = 106.68568690000001;
-      
-        var nameshop :string =  this.navParams.get('nameshop');
-        var address :string  =  this.navParams.get('address');
-        var address_shop = nameshop+address;
-        this.shop ={name : nameshop , address : address};
+  async  initMap() {
+    try{
+            await this.service_GPS.requirement_GPS()
+            
+            let GPS_lang = await this._geolocation.getCurrentPosition();
+              let lat_user = GPS_lang.coords.latitude;// vĩ độ
+              let lng_uer = GPS_lang.coords.longitude;// khinh độ
+              //var lat_user = 10.8194056;
+              //var lng_uer = 106.68568690000001;
+          
+                var nameshop :string =  this.navParams.get('nameshop');
+                var address :string  =  this.navParams.get('address');
+                var address_shop = nameshop+address;
+                this.shop ={name : nameshop , address : address};
 
-        this.map = new google.maps.Map(document.getElementById('map_canvas'), {
-          zoom: 20,
-          center: {lat: lat_user, lng: lng_uer}
-        });
+                this.map = new google.maps.Map(document.getElementById('map_canvas'), {
+                  zoom: 20,
+                  center: {lat: lat_user, lng: lng_uer}
+                });
+                
+                directionsDisplay.setMap(this.map);
+                this.calculateAndDisplayRoute({lat:lat_user,lng:lng_uer},address_shop) 
+            
+
+    } catch(err) {
         
-        directionsDisplay.setMap(this.map);
-        this.calculateAndDisplayRoute({lat:lat_user,lng:lng_uer},address_shop) 
-    },(err)=>{alert('loi'+err)});//_geolocation
+     console.log('errrr',err)
+     if(err.message = "Illegal Access" && err.code == 1) {
+       this.alert.create({
+         title:"<h4 style='color:red'>Cảnh Báo</h4>",
+         message:'Bạn hãy cân nhấc, nếu vô tình hãy cấp lại quyền vi tri cho ứng dụng',
+         buttons:[
+         {
+           text:'Từ chối',
+           cssClass:'color_button',
+           handler:()=>{return;},
+          
+         },
+         {
+           cssClass:'color_button',
+           text: 'Cài đặt vị trí',
+           handler:()=>{
+             this._Diagnostic.switchToSettings().then(()=>{})
+            
+             },
+          
+         }
+       ],
+         
+       }).present()
+      
+     }
+    }
+     
+
   }
+
+
+
   calculateAndDisplayRoute(langt_user,address_shop) {
    console.log(langt_user);
     directionsService.route({

@@ -1,3 +1,6 @@
+@import "../../node_modules/ionic2-auto-complete/auto-complete";
+
+
 .toolbar-background {
     background-color: #1c4d30;
 }
@@ -18,5 +21,12 @@ ion-backdrop{
         background: none;
 }
 .color_button{
+    color : green;
+}
+.back-button.show-back-button{
+    position: absolute;
+    z-index: 2;
+}
+.item-input .label-md, .labble_diachi{
     color : green;
 }

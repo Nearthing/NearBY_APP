@@ -1,13 +1,13 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{point.point.nameshop}}</ion-title>
+    <ion-title align="center"  >{{point.point.nameshop}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="tutorial-page">
   <ion-card>
 
-    <img src="assets/imgs/banh.png">
+    <img [src]="imgShop">
     <ion-fab right top>
       <button ion-fab (click)="mapPage()">
         <ion-icon name="pin"></ion-icon>
@@ -26,10 +26,9 @@
         <ion-icon name="star-half"></ion-icon>
         <ion-icon name="star-outline"></ion-icon>
       </span>
-      <span item-start>(186<ion-icon name="person"></ion-icon>)</span>
-      <button ion-button icon-start clear item-end>
-        Đánh giá
-      </button>
+      <span item-start>(186
+        <ion-icon name="person"></ion-icon>)</span>
+
     </ion-item>
   </ion-card>
 
@@ -57,23 +56,29 @@
           Đánh giá địa điểm này
         </h5>
         <p style="font-size: 30px">
-          <ion-icon name="star-outline"></ion-icon>
-          <ion-icon name="star-outline"></ion-icon>
-          <ion-icon name="star-outline"></ion-icon>
-          <ion-icon name="star-outline"></ion-icon>
-          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon [name]="(rateStar==0)? 'star-outline':'star'" (click)="RateStar(1)"></ion-icon>
+          <ion-icon [name]="(rateStar==0 || rateStar==1)? 'star-outline':'star'" (click)="RateStar(2)"></ion-icon>
+          <ion-icon [name]="(rateStar==0 || rateStar==1 || rateStar==2)? 'star-outline':'star'" (click)="RateStar(3)"></ion-icon>
+          <ion-icon [name]="(rateStar==0 || rateStar==1 || rateStar==2 || rateStar==3)? 'star-outline':'star'" (click)="RateStar(4)"></ion-icon>
+          <ion-icon [name]="(rateStar==0 || rateStar==1 || rateStar==2 || rateStar==3 || rateStar==4)? 'star-outline':'star'" (click)="RateStar(5)"></ion-icon>
         </p>
       </ion-slide>
       <ion-slide>
         <h5 style="color: #488aff;">
           Viết đánh giá ngắn
         </h5>
-        <ion-list>
+        <ion-list inset>
+
           <ion-item>
-            <ion-input style="margin: 10px 10px 0 10px;" type="text" placeholder="Viết suy nghĩ của bạn về địa điểm này"></ion-input>
+            <ion-input type="text" placeholder="Tên bạn là gì nhỉ?" #name></ion-input>
           </ion-item>
+
+          <ion-item>
+            <ion-input type="text" placeholder="Đánh giá ngắn về nơi này" #comment></ion-input>
+          </ion-item>
+
         </ion-list>
-        <button ion-button clear style="margin: -10px 0 0 250px;">GỬI</button>
+        <button ion-button clear style="margin: -10px 0 0 250px;" (click)="SendComment(name.value,comment.value)">GỬI</button>
       </ion-slide>
     </ion-slides>
 
@@ -82,19 +87,22 @@
   <ion-item-group>
     <ion-item-divider color="light">Bình luận</ion-item-divider>
     <ion-item *ngFor="let cmt of comments" text-wrap>
+
       <h5>
-        <b>{{cmt.Name}}</b>
+        <b>{{cmt.anonymous_user}}</b>
       </h5>
       <p>
         <ion-icon name="star"></ion-icon>
-        <ion-icon [name]="cmt.RateStar==1? 'star-outline':'star'"></ion-icon>
-        <ion-icon [name]="(cmt.RateStar==1 || cmt.RateStar==2)? 'star-outline':'star'"></ion-icon>
-        <ion-icon [name]="(cmt.RateStar==1 || cmt.RateStar==2 || cmt.RateStar==3)? 'star-outline':'star'"></ion-icon>
-        <ion-icon [name]="(cmt.RateStar==1 || cmt.RateStar==2 || cmt.RateStar==3 || cmt.RateStar==4)? 'star-outline':'star'"></ion-icon>
-        {{cmt.CommentDate}}
+        <ion-icon [name]="cmt.value==1? 'star-outline':'star'"></ion-icon>
+        <ion-icon [name]="(cmt.value==1 || cmt.value==2)? 'star-outline':'star'"></ion-icon>
+        <ion-icon [name]="(cmt.value==1 || cmt.value==2 || cmt.value==3)? 'star-outline':'star'"></ion-icon>
+        <ion-icon [name]="(cmt.value==1 || cmt.value==2 || cmt.value==3 || cmt.value==4)? 'star-outline':'star'"></ion-icon>
+        {{cmt.createdate}}
       </p>
-      <p>{{cmt.Content}}</p>
+      <p>{{cmt.comment}}</p>
     </ion-item>
+
+    
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>

@@ -3,11 +3,14 @@ import { NavController, Platform, IonicPage, AlertController, LoadingController 
 import {GoogleMap,} from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Diagnostic } from '@ionic-native/diagnostic';
-import { LocationAccuracy } from '@ionic-native/location-accuracy';
+
 import { ApiProvider } from '../../providers/api/api';
+import { GpsProvider } from '../../providers/gps/gps';
+import { LocationAccuracy } from '../../../node_modules/@ionic-native/location-accuracy';
 
 declare var google; // api google
 var service = new google.maps.DistanceMatrixService;
+
 @IonicPage()
 @Component({
   selector: 'page-home',
@@ -27,13 +30,13 @@ export class HomePage {
     private _geolocation: Geolocation,
     public platform: Platform,
     public _Diagnostic: Diagnostic,
-    private _locationAccuracy: LocationAccuracy,
     public api: ApiProvider,
     public alert: AlertController,
-    public loadControl: LoadingController
-
+    public _locationAccuracy:LocationAccuracy,
+    public loadControl: LoadingController,
+    public service_GPS : GpsProvider,
   ) { }
-
+ 
   async  ionViewDidLoad() {
     await this.platform.ready();
     let load_ds_point = this.loadControl.create({
@@ -49,6 +52,7 @@ export class HomePage {
     //await this.test_page()
     load_ds_point.dismiss();
     this.alert_refresh = null;
+    
   }
   // test tren website
   test_page() {
@@ -64,40 +68,33 @@ export class HomePage {
           console.log('khong co dia diem');
           return;
         }
-
         this.call_api_llist_point(result)
       })
       
   }
-
-
 
   // request server lay danh sach cac point hop le
   async call_api_llist_point(result) {
     this.arr_destinationAddress = await this.list_point({ lat: 10.8194056, lng: 106.68568690000001 }, result)
   }
 
-
-
   async load_page() {
     try {
-      
-      let GPS = await this.requirement_GPS()
-       console.log("requirement_GPS",GPS)
+      await this.requirement_GPS()
+      //  console.log("requirement_GPS",GPS)
       // GPS_lang là tọa độ của user
       let GPS_lang = await this._geolocation.getCurrentPosition()
-      console.log('GPS_lang',GPS_lang)
+      // console.log('GPS_lang',GPS_lang)
       let lat = GPS_lang.coords.latitude;// vĩ độ
       let lng = GPS_lang.coords.longitude;// khinh độ
       this.lat_user = lat;
       this.lng_user = lng;
       //tao loading trong thoi gian loa danh sach
-     
       let arr_point = await this.call_get_arrpoint(lat, lng)
       this.arr_destinationAddress = await this.list_point({ lat: lat, lng: lng }, arr_point)
       
     } catch (err) {
-     console.log('errrr',err)
+
           if(err.message = "Illegal Access" && err.code == 1) {
             this.alert.create({
               title:"<h4 style='color:red'>Cảnh Báo</h4>",
@@ -129,7 +126,7 @@ export class HomePage {
   }
 
   //yeu cau thiet bi phai bat GPS
- async requirement_GPS(): Promise<any> {
+  requirement_GPS(): Promise<any> {
     return new Promise((resolve, reject) => {
       this._Diagnostic.isGpsLocationEnabled().then((data)=>{
         this._locationAccuracy.canRequest().then(data_canreques =>{
@@ -155,8 +152,6 @@ export class HomePage {
         
          
       })
-
-
     })
   }
   // lay danh sach point o server
@@ -230,11 +225,14 @@ export class HomePage {
     }, 1000);
   }
 
+
   //===== HÀM PUSH QUA TRANG CHỈ DƯỜNG =======
 
   public push_shop(point) {
     this.navCtrl.push('ShopPage', { point: point });
   }
-
+  public push_search() {
+    this.navCtrl.push('SearchPage',{'lat_user': this.lat_user,'lng_user':this.lng_user},{animate:true,duration:100,animation:'ios-transition'});
+  }
 
 }

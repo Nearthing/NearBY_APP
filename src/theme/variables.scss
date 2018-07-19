@@ -53,8 +53,8 @@ $colors: (
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-
-
+$text-input-md-highlight-color : color($colors, secondary);
+$text-input-md-background-color :color($colors, secondary);
 
 // App Windows Variables
 // --------------------------------------------------
